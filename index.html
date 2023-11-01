@@ -1,11 +1,38 @@
 <!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <title>GDQP</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
+  <iframe id="iframe" src="https://example.com"></iframe>
 
+  <div id="popup">
+    <div id="question">
+      <p id="questionText"></p>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      "Question 1: What is your favorite color?",
+      "Question 2: What is your favorite food?",
+      "Question 3: Where is your dream vacation destination?",
+    ];
+
+    const popup = document.getElementById("popup");
+    const questionText = document.getElementById("questionText");
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "w") {
+        const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+        questionText.textContent = randomQuestion;
+        popup.style.display = "block";
+
+        setTimeout(() => {
+          popup.style.display = "none";
+        }, 3000); // Adjust the time the question is displayed (in milliseconds)
+      }
+    });
+  </script>
 </body>
 </html>
