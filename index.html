@@ -4,33 +4,76 @@
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <iframe id="iframe" src="https://example.com"></iframe>
+  <iframe id="iframe" src="https://geometrydashlite.co/game/geometry-dash-lite/"></iframe>
 
   <div id="popup">
     <div id="question">
       <p id="questionText"></p>
+      <ul id="answers">
+        <li class="answer" onclick="checkAnswer(this)"></li>
+        <li class="answer" onclick="checkAnswer(this)"></li>
+        <li class="answer" onclick="checkAnswer(this)"></li>
+        <li class="answer" onclick="checkAnswer(this)"></li>
+      </ul>
     </div>
   </div>
 
   <script>
     const questions = [
-      "Question 1: What is your favorite color?",
-      "Question 2: What is your favorite food?",
-      "Question 3: Where is your dream vacation destination?",
+      {
+        question: "What is the capital of France?",
+        answers: ["Berlin", "Madrid", "Paris", "Rome"],
+        correctAnswer: "Paris"
+      },
+      {
+        question: "Which planet is known as the Red Planet?",
+        answers: ["Earth", "Mars", "Jupiter", "Venus"],
+        correctAnswer: "Mars"
+      },
+      {
+        question: "What is the largest mammal in the world?",
+        answers: ["Elephant", "Giraffe", "Blue Whale", "Lion"],
+        correctAnswer: "Blue Whale"
+      },
+      {
+        question: "What is the chemical symbol for water?",
+        answers: ["H2O", "CO2", "O2", "CH4"],
+        correctAnswer: "H2O"
+      }
     ];
 
     const popup = document.getElementById("popup");
     const questionText = document.getElementById("questionText");
+    const answersList = document.getElementById("answers").getElementsByTagName("li");
+
+    function showQuestion() {
+      const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+      questionText.textContent = randomQuestion.question;
+
+      for (let i = 0; i < answersList.length; i++) {
+        answersList[i].textContent = randomQuestion.answers[i];
+        answersList[i].classList.remove("correct");
+      }
+
+      // Set the correct answer
+      const correctAnswerIndex = randomQuestion.answers.indexOf(randomQuestion.correctAnswer);
+      answersList[correctAnswerIndex].classList.add("correct");
+
+      popup.style.display = "block";
+    }
+
+    function checkAnswer(selectedAnswer) {
+      if (selectedAnswer.classList.contains("correct")) {
+        alert("Correct! The answer is " + selectedAnswer.textContent);
+      } else {
+        alert("Incorrect. Try again.");
+      }
+      popup.style.display = "none";
+    }
 
     document.addEventListener("keydown", function (e) {
       if (e.key === "w") {
-        const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
-        questionText.textContent = randomQuestion;
-        popup.style.display = "block";
-
-        setTimeout(() => {
-          popup.style.display = "none";
-        }, 3000); // Adjust the time the question is displayed (in milliseconds)
+        showQuestion();
       }
     });
   </script>
